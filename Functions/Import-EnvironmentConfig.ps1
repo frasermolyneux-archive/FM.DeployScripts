@@ -1,11 +1,12 @@
 function Import-EnvironmentConfig {
     [CmdletBinding()]
     param (
-        [Parameter(Mandatory = $true)] [String] $Environment
+        [Parameter(Mandatory = $true)] [String] $Environment,
+        [Parameter(Mandatory = $true)] [String] $ConfigDir
     )
     
     begin {
-        Write-Debug "Begin importing environment config for environment $Environment"
+        Write-Debug "Begin importing environment config for environment $Environment in $ConfigDir"
 
         [HashTable] $configurationData = @{}
         [System.Collections.ArrayList]$configs = @()
@@ -13,12 +14,12 @@ function Import-EnvironmentConfig {
     
     process {
 
-        if ((Test-Path -Path "$PSScriptRoot\..\Environments\Environment.$Environment.psd1") -eq $false) {
-            Write-Error "The environment file for $Environment does not exist"
+        if ((Test-Path -Path "$ConfigDir\..\Environments\Environment.$Environment.psd1") -eq $false) {
+            Write-Error "The environment file for $Environment does not exist in $ConfigDir"
         }
 
-        $configs.Add("$PSScriptRoot\..\Environments\Environment.Base.psd1") | Out-Null
-        $configs.Add("$PSScriptRoot\..\Environments\Environment.$Environment.psd1") | Out-Null
+        $configs.Add("$ConfigDir\..\Environments\Environment.Base.psd1") | Out-Null
+        $configs.Add("$ConfigDir\..\Environments\Environment.$Environment.psd1") | Out-Null
 
         [System.Collections.ArrayList]$configFileData = @()
 
@@ -31,7 +32,7 @@ function Import-EnvironmentConfig {
     }
     
     end {
-        Write-Debug "End importing environment config for environment $Environment"
+        Write-Debug "End importing environment config for environment $Environment in $ConfigDir"
         return $configurationData
     }
 }
