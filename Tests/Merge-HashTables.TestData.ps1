@@ -155,4 +155,71 @@ $MergeHashTablesTestData = @{
             )
         }
     }
+
+    ShouldMergeSubSubHashTables = @{
+        InputHashTable1 = @{
+            ElasticBeanstalk  = @{
+                TierName          = "WebServer"
+                TierType          = "Standard"
+                
+                OptionSettings    = @(
+                    @{
+                        Namespace  = "aws:autoscaling:launchconfiguration"
+                        OptionName = "IamInstanceProfile"
+                        Value      = "aws-elasticbeanstalk-ec2-role"
+                    }
+                    @{
+                        Namespace  = "aws:autoscaling:launchconfiguration"
+                        OptionName = "InstanceType"
+                        Value      = "t2.micro"
+                    }
+                )
+            }
+        }
+        InputHashTable2 = @{
+            ElasticBeanstalk  = @{
+                OptionSettings    = @(
+                    @{
+                        Namespace  = "aws:elbv2:listener:443"
+                        OptionName = "DefaultProcess"
+                        Value      = "default"
+                    }
+                    @{
+                        Namespace  = "aws:elbv2:listener:443"
+                        OptionName = "ListenerEnabled"
+                        Value      = "true"
+                    }
+                )
+            }
+        }
+        ExpectedResult = @{
+            ElasticBeanstalk  = @{
+                TierName          = "WebServer"
+                TierType          = "Standard"
+
+                OptionSettings    = @(
+                    @{
+                        Namespace  = "aws:autoscaling:launchconfiguration"
+                        OptionName = "IamInstanceProfile"
+                        Value      = "aws-elasticbeanstalk-ec2-role"
+                    }
+                    @{
+                        Namespace  = "aws:autoscaling:launchconfiguration"
+                        OptionName = "InstanceType"
+                        Value      = "t2.micro"
+                    }
+                    @{
+                        Namespace  = "aws:elbv2:listener:443"
+                        OptionName = "DefaultProcess"
+                        Value      = "default"
+                    }
+                    @{
+                        Namespace  = "aws:elbv2:listener:443"
+                        OptionName = "ListenerEnabled"
+                        Value      = "true"
+                    }
+                )
+            }
+        }
+    }
 }

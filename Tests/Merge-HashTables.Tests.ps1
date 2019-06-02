@@ -80,4 +80,17 @@ Describe "Merge-HashTables" {
         $expectedResult = $MergeHashTablesTestData.ShouldMergeSubArrays.ExpectedResult
         Assert-HashTablesAreEqual -expectedHashTable $expectedResult -resultHashTable $result
     }
+
+    It "should merge sub sub hashtables and arrays" {
+        # Arrange
+        $inputHashTable1 = $MergeHashTablesTestData.ShouldMergeSubSubHashTables.InputHashTable1
+        $inputHashTable2 = $MergeHashTablesTestData.ShouldMergeSubSubHashTables.InputHashTable2
+
+        # Act
+        $result = $inputHashTable1, $inputHashTable2 | Merge-HashTables
+
+        # Assert
+        $expectedResult = $MergeHashTablesTestData.ShouldMergeSubSubHashTables.ExpectedResult
+        Assert-HashTablesAreEqual -expectedHashTable $expectedResult -resultHashTable $result
+    }
 }
