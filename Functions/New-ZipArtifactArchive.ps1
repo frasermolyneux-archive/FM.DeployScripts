@@ -1,4 +1,4 @@
-function New-IPSArtifactArchive {
+function New-ZipArtifactArchive {
     [CmdletBinding()]
     param (
         [Parameter(Mandatory = $true)] [String] $WebsiteFilePath,
@@ -7,7 +7,7 @@ function New-IPSArtifactArchive {
     )
     
     begin {
-        Write-Debug "Begin creating IPS artifact archive $ArchiveName for $WebsiteFilePath in $WorkingDirectory"
+        Write-Debug "Begin creating Zip artifact archive $ArchiveName for $WebsiteFilePath in $WorkingDirectory"
     }
     
     process {
@@ -15,10 +15,6 @@ function New-IPSArtifactArchive {
         if ((Test-Path -Path "$WorkingDirectory\$ArchiveName.zip") -eq $true) {
             Remove-Item -Path "$WorkingDirectory\$ArchiveName.zip" -Force
         }
-
-        Get-ChildItem -Path $WebsiteFilePath
-        New-Item -Path "$WebsiteFilePath\.ebextensions" -ItemType Directory -Force
-        Copy-Item -Path "$PSScriptRoot\..\EBExtensions\*" -Destination "$WebsiteFilePath\.ebextensions" -Force
 
         $customEncoder = '
         using System.Text;
@@ -40,6 +36,6 @@ function New-IPSArtifactArchive {
     }
     
     end {
-        Write-Debug "End creating IPS artifact archive $ArchiveName for $WebsiteFilePath in $WorkingDirectory"
+        Write-Debug "End creating Zip artifact archive $ArchiveName for $WebsiteFilePath in $WorkingDirectory"
     }
 }
