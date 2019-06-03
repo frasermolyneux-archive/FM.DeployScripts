@@ -1,30 +1,29 @@
 function Ensure-AwsRdsSecurityGroupExists {
     [CmdletBinding()]
     param (
-        [Parameter(Mandatory = $true)] [String] $ApplicationName,
-        [Parameter(Mandatory = $true)] [String] $EnvironmentName
+        [Parameter(Mandatory = $true)] [String] $Environment
     )
     
     begin {
-        Write-Debug "Begin ensure AWS RDS security exists for $ApplicationName\$EnvironmentName"
+        Write-Debug "Begin ensure AWS RDS security exists for $Environment"
     }
     
     process {
 
-        $groupName = "$($ApplicationName)-$EnvironmentName-AWS-RDS-DatabaseSecurityGroup"
-        $groupDescription = "$($ApplicationName)-$EnvironmentName-AWS-RDS-DatabaseSecurityGroup"
+        $groupName = "$($ApplicationName)-$Environment-AWS-RDS-DatabaseSecurityGroup"
+        $groupDescription = "$($ApplicationName)-$Environment-AWS-RDS-DatabaseSecurityGroup"
         
         try {
             $databaseAccessGroup = Get-EC2SecurityGroup -GroupName $groupName
         } 
         catch {
-            Write-Information "Creating Security Group named $groupName for $ApplicationName\$EnvironmentName"
+            Write-Information "Creating Security Group named $groupName for $Environment"
             New-EC2SecurityGroup -GroupName $groupName -GroupDescription $groupDescription
         }
 
     }
     
     end {
-        Write-Debug "End ensure AWS RDS security exists for $ApplicationName\$EnvironmentName"
+        Write-Debug "End ensure AWS RDS security exists for $Environment"
     }
 }
