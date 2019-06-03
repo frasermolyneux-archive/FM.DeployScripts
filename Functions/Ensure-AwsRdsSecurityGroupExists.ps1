@@ -10,8 +10,8 @@ function Ensure-AwsRdsSecurityGroupExists {
     
     process {
 
-        $groupName = "$($ApplicationName)-$Environment-AWS-RDS-DatabaseSecurityGroup"
-        $groupDescription = "$($ApplicationName)-$Environment-AWS-RDS-DatabaseSecurityGroup"
+        $groupName = "$Environment-AWS-RDS-DatabaseSecurityGroup"
+        $groupDescription = "$Environment-AWS-RDS-DatabaseSecurityGroup"
         
         try {
             $databaseAccessGroup = Get-EC2SecurityGroup -GroupName $groupName
