@@ -33,6 +33,12 @@ function Apply-LatestConfigurationToEnvironment {
         else {
             $parameters.EnvironmentId = $environment.EnvironmentId
 
+            while ($environment.Status -ne "Ready") {
+                Write-Information "Environment $EnvironmentName is not in a ready state - waiting for 10 seconds"
+                Start-Sleep -Seconds 10
+                $environment = Get-EBEnvironment -ApplicationName $ApplicationName -EnvironmentName $EnvironmentName
+            }
+
             Write-Information "Applying latest configuration for environment $EnvironmentName under $ApplicationName"
             Update-EBEnvironment @parameters
             Write-Information "Finished applying latest configuration for environment $EnvironmentName under $ApplicationName"
