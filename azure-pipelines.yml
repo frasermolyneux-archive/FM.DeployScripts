@@ -9,7 +9,7 @@ steps:
   displayName: 'PowerShell Script'
   inputs:
     targetType: filePath
-    filePath: './Execute-Tests.ps1'
+    filePath: './src/Execute-Tests.ps1'
     failOnStderr: true
 
 - task: CopyFiles@2
